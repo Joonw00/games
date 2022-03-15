@@ -1,32 +1,10 @@
+#시간제한, 턴 수 UI추가
+#렌주 룰 추가해야 함
+#ML 추가 시, win=0변수 추가해서 조건 설정 하면 될 듯
 import pygame, sys
 from pygame.locals import *
-#from rule import *   
-
-#다른 모듈에 옮길 부분,귀찮다
-def prog(turn,x,y):
-    if turn%2 == 1:   #검은 색 차례일 때
-        pygame.draw.circle(screen,Black,[x,y],Radius)
-    elif turn%2 == 0:
-        pygame.draw.circle(screen,White,[x,y],Radius)
-def adjx(x):
-    if x%40 <= 20:
-        a = x%40
-        x-=a
-        return x
-    elif x%40 > 20:
-        a = x%40
-        x-=a-40
-        return x
-
-def adjy(y):
-    if y%40 <= 20:
-        a = y%40
-        y-=a
-        return y
-    elif y%40 > 20:
-        a = y%40
-        y-=a-40
-        return y
+import rule
+import let
 
 #기본 초기화 부분(반드시 해야 함)
 pygame.init()   #초기화 (반드시 필요)
@@ -52,6 +30,9 @@ Radius = 20
 stay = []   #돌들의 유지를 위해 선언
 turn = 1 #처음에는 검은 색 차례
 
+B_stone = []
+W_stone = []
+
 #이벤트 루프
 running = True
 while running:
@@ -74,10 +55,17 @@ while running:
             crd = pygame.mouse.get_pos()
             x1 = crd[0]
             y1 = crd[1]
-            x = adjx(x1)
-            y = adjy(y1)
+            x = let.adjx(x1)
+            y = let.adjy(y1)
+            #이미 논 자리에 못놓게 하기
+            if [x,y] in stay:
+                print("이미 놓은 자리 입니다")
+                break
             stay.append([x,y])
-
+            if turn%2 == 1:
+                B_stone.append([x//40,y//40])
+            else:
+                W_stone.append([x//40,y//40])
             turn+=1
     #이미 놔진 돌들 유지하는 부분
     for i in range(len(stay)):
@@ -87,11 +75,14 @@ while running:
             pygame.draw.circle(screen,Black,[x2,y2],Radius)
         else:
             pygame.draw.circle(screen,White,[x2,y2],Radius)
+    rule.judge(B_stone)
+    rule.judge(W_stone)
+
 
     pygame.display.update()
 
-#잠시 대기
-pygame.time.delay(2000)
+# 이거 왜 필요 했지???
+# pygame.time.delay(2000)
 
 
 #pygame 종료
