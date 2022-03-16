@@ -1,11 +1,12 @@
 #시간제한, 턴 수 UI추가
 #렌주 룰 추가해야 함
 #ML 추가 시, win=0변수 추가해서 조건 설정 하면 될 듯
+#게임 창과 따로, gui띄워서 무르기,기권,한수 쉼 기능 추가해볼 것
+
 import pygame, sys
 from pygame.locals import *
 import rule
 import let
-
 #기본 초기화 부분(반드시 해야 함)
 pygame.init()   #초기화 (반드시 필요)
 
@@ -47,19 +48,25 @@ while running:
     for event in pygame.event.get():      
         if event.type == pygame.QUIT:       
             running == False    
-        #개발 편의 용으로 넣은 거
+        #esc종료
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:      
-                pygame.quit()  
+            if event.key == pygame.K_ESCAPE:      
+                pygame.quit()
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             crd = pygame.mouse.get_pos()
             x1 = crd[0]
             y1 = crd[1]
             x = let.adjx(x1)
             y = let.adjy(y1)
-            #이미 논 자리에 못놓게 하기
+            #놓은 자리에 못놓게
             if [x,y] in stay:
                 print("이미 놓은 자리 입니다")
+                break
+            #흑 차례 렌주룰
+            if turn%2 == 1: 
+                ren1 = rule.thth([x,y],B_stone,W_stone)
+                ren2 = rule.B_six([x,y],B_stone)
+            if ren1 == 1 or ren2 == 1:
                 break
             stay.append([x,y])
             if turn%2 == 1:
@@ -75,8 +82,9 @@ while running:
             pygame.draw.circle(screen,Black,[x2,y2],Radius)
         else:
             pygame.draw.circle(screen,White,[x2,y2],Radius)
-    rule.judge(B_stone)
-    rule.judge(W_stone)
+    #종료조건을 running == False 로 바꿔서 오류  제거 해야 할 듯
+    rule.judge(B_stone,turn)
+    rule.judge(W_stone,turn)
 
 
     pygame.display.update()
