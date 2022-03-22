@@ -1,14 +1,14 @@
 #시간제한, 턴 수 UI추가
-#렌주 룰 추가해야 함
-#ML 추가 시, win=0변수 추가해서 조건 설정 하면 될 듯
-#게임 창과 따로, gui띄워서 무르기,기권,한수 쉼 기능 추가해볼 것
+#게임 창과 따로, gui띄워서 무르기,기권,한수 쉼 기능 추가 해 볼 것
+#상수를 너무 많이 사용했음//공통되는 상수들 변수로 처리해 줄 것
+
 
 import pygame, sys
 from pygame.locals import *
 import rule
 import let
 #기본 초기화 부분(반드시 해야 함)
-pygame.init()   #초기화 (반드시 필요)
+pygame.init()
 
 #화면 크기 설정
 screen_width = 640
@@ -17,12 +17,12 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 
 
 #화면 타이틀 설정
-pygame.display.set_caption("오목") #게임 이름
+pygame.display.set_caption("오목")
 
 #FPS
 clock = pygame.time.Clock()
 
-#1. 사용자 게임 초기화(배경,게임 이미지,좌표, 속도, 폰트 등)
+#1. 사용자 게임 초기화
 White = (255,255,255)
 Black = (0,0,0)
 brown = (153,102,0)
@@ -33,6 +33,11 @@ turn = 1 #처음에는 검은 색 차례
 
 B_stone = []
 W_stone = []
+
+#ML
+win = 0
+
+
 
 #이벤트 루프
 running = True
@@ -62,7 +67,7 @@ while running:
             if [x,y] in stay:
                 print("이미 놓은 자리 입니다")
                 break
-            #흑 차례 렌주룰
+            #흑 차례에 렌주룰
             if turn%2 == 1: 
                 ren1 = rule.thth([x,y],B_stone,W_stone)
                 ren2 = rule.B_six([x,y],B_stone)

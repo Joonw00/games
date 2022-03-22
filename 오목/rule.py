@@ -17,13 +17,9 @@ def judge(stone,turn):
 def thth(cur,B,W): #33
     x = cur[0]//40
     y = cur[1]//40
-    #같은 줄에 몇 개가 있는 지
-    #4가지 주변 직선상에(양방향) 흑이 2개 있으면 +1, 주변 3개 중에 백이 있으면 다시 -1
     
     th3 = 0 #이게 2이상이면 33
-    th4 = 0 #이게 2 이상이면 44
-    #if이거 합치고 싶은데 못하나
-    #전체를 함수로 만들면 편할 듯, 나중에..
+    th4 = 0 #이게 2 이상이면 44.
     if [x+1,y] not in W and [x+2,y] not in W and [x+3,y] not in W and [x-1,y] not in W and [x-2,y] not in W and [x-3,y] not in W:
         line = 0    #한 줄에 같은게 몇 개 있는 지
         for i in range(1,4):
