@@ -1,16 +1,17 @@
+#렌주룰 따로 모듈 파서 분리하는 게 깔끔할 듯, 코드 너무 길다
 import pygame, sys
 from pygame.locals import *
 
 #종료 조건
-def judge(stone,turn):
+def judge(stone,turn,stay):
     stone.sort()
     for i in range(len(stone)):
         x = stone[i][0]
         y = stone[i][1]
-        fiver(5,x,y,stone,turn)
-        fived(5,x,y,stone,turn)
-        fivedg(5,x,y,stone,turn)
-        fiveu(5,x,y,stone,turn)
+        fiver(5,x,y,stone,turn,stay)
+        fived(5,x,y,stone,turn,stay)
+        fivedg(5,x,y,stone,turn,stay)
+        fiveu(5,x,y,stone,turn,stay)
     return
 
 #정확한 33의 정의는 아니지만, 정하기 나름이라 내가 편한 거로 정했음
@@ -76,8 +77,6 @@ def thth(cur,B,W): #33
         print("4x4 입니다.")
         return 1
     return 0
-
-
 def B_six(cur,stone):    #6목
     x = cur[0]//40
     y = cur[1]//40
@@ -101,54 +100,44 @@ def B_six(cur,stone):    #6목
         return 1
     return 0
 
-
-
-
-
+def game_end(winner,stay):
+    if winner == 1:
+        print("백이 승리했습니다")
+    elif winner == 0:
+        print("흑이 승리했습니다.")
+    pygame.time.delay(2000)
+    #게임 초기화 시키고 다시 시작
+    stay.clear()
+    return
 
 #5개가 연속해있는 지 판단(우측)
-def fiver(n,x,y,stone,turn):
+def fiver(n,x,y,stone,turn,stay):
     if n == 1: 
-        if turn%2 == 1:
-            print("백이 승리했습니다.")
-        else:
-            print("흑이 승리했습니다.")
-        pygame.quit()   #이거 바꿔 줘야 됨(메인에서 업데이트 에러 뜸)
+        game_end(turn%2,stay)
+        return
     if [x+1,y] in stone:
-        fiver(n-1,x+1,y,stone,turn)
+        fiver(n-1,x+1,y,stone,turn,stay)
     return
 
-def fived(n,x,y,stone,turn):
+def fived(n,x,y,stone,turn,stay):
     if n == 1: 
-        if turn%2 == 1:
-            print("백이 승리했습니다.")
-        else:
-            print("흑이 승리했습니다.")
-        pygame.quit()    
+        game_end(turn%2,stay) 
         return
     if [x,y+1] in stone:
-        fived(n-1,x,y+1,stone,turn)
+        fived(n-1,x,y+1,stone,turn,stay)
     return
 
-def fivedg(n,x,y,stone,turn):
+def fivedg(n,x,y,stone,turn,stay):
     if n == 1: 
-        if turn%2 == 1:
-            print("백이 승리했습니다.")
-        else:
-            print("흑이 승리했습니다.")
-        pygame.quit()
+        game_end(turn%2,stay)
         return
     if [x+1,y+1] in stone:
-        fivedg(n-1,x+1,y+1,stone,turn)
+        fivedg(n-1,x+1,y+1,stone,turn,stay)
     return
-def fiveu(n,x,y,stone,turn):
+def fiveu(n,x,y,stone,turn,stay):
     if n == 1: 
-        if turn%2 == 1:
-            print("백이 승리했습니다.")
-        else:
-            print("흑이 승리했습니다.")
-        pygame.quit()
+        game_end(turn%2,stay)
         return
     if [x+1,y-1] in stone:
-        fiveu(n-1,x+1,y-1,stone,turn)
+        fiveu(n-1,x+1,y-1,stone,turn,stay)
     return
