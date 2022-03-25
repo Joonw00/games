@@ -101,7 +101,7 @@ while running:
         else:
             pygame.draw.circle(screen,White,[x2,y2],Radius)
 
-    #시간 패
+    #시간 패,저장x
     if elapsed_time > 31:
         rule.game_end((turn+1)%2,stay)
         start_ticks = pygame.time.get_ticks()

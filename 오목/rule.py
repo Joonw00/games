@@ -15,6 +15,8 @@ def judge(stone,turn,stay):
     return
 
 #정확한 33의 정의는 아니지만, 정하기 나름이라 내가 편한 거로 정했음
+
+#코드 정리 할 것
 def thth(cur,B,W): #33
     x = cur[0]//40
     y = cur[1]//40
@@ -105,7 +107,11 @@ def game_end(winner,stay):
         print("백이 승리했습니다")
     elif winner == 0:
         print("흑이 승리했습니다.")
-    pygame.time.delay(2000)
+    #결과 저장
+    f = open("games\\오목\\game_data.txt",'a')
+    f.write("{0}\n".format(stay))
+    f.close()
+
     #게임 초기화 시키고 다시 시작
     stay.clear()
     return
