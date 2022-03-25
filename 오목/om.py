@@ -1,5 +1,6 @@
 #할 것들 목록
-#시간제한, 턴 수 UI추가
+#턴 수 UI추가
+#코드 압축 필요함
 #게임 창과 따로, gui띄워서 무르기,기권,한수 쉼 기능 추가 해 볼 것
 #상수를 너무 많이 사용했음//공통되는 상수들 변수로 처리해 줄 것
 #강화학습이용 AI 구현
@@ -106,7 +107,6 @@ while running:
         start_ticks = pygame.time.get_ticks()
     #렌주룰 및 승리여부 판단
     rule.judge(B_stone,turn,stay)
-    #이거 안쓰면 game_end함수 오토콜됨!! 1시간동안 찾았네
     if len(stay) == 0:
         B_stone.clear()
         W_stone.clear()
@@ -114,6 +114,7 @@ while running:
     if len(stay) == 0:
         B_stone.clear()
         W_stone.clear()
+        turn = 1
 
     pygame.display.update()
 
