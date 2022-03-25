@@ -1,18 +1,18 @@
 #할 것들 목록
-#턴 수 UI추가
-#코드 압축 필요함
-#게임 창과 따로, gui띄워서 무르기,기권,한수 쉼 기능 추가 해 볼 것
-#상수를 너무 많이 사용했음//공통되는 상수들 변수로 처리해 줄 것
+#게임 창과 따로, gui구현
+#상수를 너무 많이 사용했음//공통되는 상수들 변수로 처리해 줄 것 + 코드 압축 좀
 #강화학습이용 AI 구현
 
 #오류내역
 #게임 끝날 때 마지막 돌 왜 안보이냐
+#6목 로직 바꿔야됨
 
 import pygame, sys
 from pygame.locals import *
 import rule
 import let
-
+# import os
+# os.popen("games\\오목\\gui.py")
 #초기화
 pygame.init()
 
@@ -55,6 +55,8 @@ while running:
     elapsed_time = (pygame.time.get_ticks() - start_ticks) / 1000
     timer = game_font.render(str(int(limit_time-elapsed_time)), True, (255,255,255))
     screen.blit(timer, (5, 10))
+    turn_dp = game_font.render(str(turn-1), True, (255,255,255))
+    screen.blit(turn_dp, (610, 10))
 
     #추가할 것 : 그래픽 상향 좀
     for i in range(15):
@@ -62,9 +64,9 @@ while running:
         pygame.draw.line(screen, Black, (40+40*i,0),(40+40*i,640), 3)
 
     #키보드,마우스 등 이벤트 처리
-    for event in pygame.event.get():      
+    for event in pygame.event.get():     
         if event.type == pygame.QUIT:       
-            running == False    
+            running = False  
         #esc종료
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:      
@@ -115,12 +117,8 @@ while running:
         B_stone.clear()
         W_stone.clear()
         turn = 1
-
     pygame.display.update()
 
-#없어도 됨
-pygame.time.delay(2000)
-
-
+    
 #pygame 종료
 pygame.quit()
