@@ -10,7 +10,7 @@ AI 구현 하려면 9x9로 낮춰서 해야 할 듯
 
 머리 아프다
 
-
+![initial](https://user-images.githubusercontent.com/97094633/162252133-a81041a8-3586-4faf-83bd-be2504dd28ea.png)
 
 ## 결론
 
