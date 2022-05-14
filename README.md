@@ -6,9 +6,7 @@
 
 ## 오목
 
-AI 구현 하려면 9x9로 낮춰서 해야 할 듯
-
-머리 아프다
+ai그냥 9x9로 내려서 브루트 포스 느낌으로다가 만드는 게 빠를 듯
 
 ![initial](https://user-images.githubusercontent.com/97094633/162252537-81870db1-b59e-4d47-a722-73991f185230.png)
 
